@@ -16,6 +16,16 @@ export const metadata: Metadata = {
   title: "Sistema de Recomendación Académico",
   description:
     "Encuentra recursos de estudio personalizados basados en tu carrera, semestre y curso",
+  icons: {
+    icon: [
+      { url: "/favicon-Recocurso.png", sizes: "32x32", type: "image/png" },
+      { url: "/Imagen-Recocurso.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/Imagen-Recocurso.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon-Recocurso.png",
+  },
 };
 
 export default function RootLayout({
