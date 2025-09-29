@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS  # Necesario para conectar con Next.js (Frontend)
 import sys
 import os
@@ -9,6 +9,9 @@ from data.mock_data import ACADEMIC_DATA, RESOURCES_DATA, GRADES_DATA
 
 app = Flask(__name__) # Instancia de Flask
 CORS(app) # Configuración de CORS para permitir conexiones desde Next.js
+
+# Configurar la carpeta de documentos como archivos estáticos
+DOCUMENTS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'data', 'documents')
 
 @app.route('/api/careers', methods=['GET'])
 def get_careers():
@@ -121,6 +124,71 @@ def get_recommendations():
     except Exception as e:
         # 8. Manejo de errores
         return jsonify({"error": f"Error en el sistema de recomendación: {str(e)}"}), 500
+
+@app.route('/api/documents/<path:filename>')
+def serve_document(filename):
+    """Endpoint para servir documentos PDF y otros archivos."""
+    try:
+        # Construir la ruta completa del archivo
+        file_path = os.path.join(DOCUMENTS_FOLDER, filename)
+        
+        # Verificar que el archivo existe
+        if not os.path.exists(file_path):
+            return jsonify({"error": "Archivo no encontrado"}), 404
+        
+        # Verificar que el archivo está dentro de la carpeta de documentos (seguridad)
+        if not os.path.abspath(file_path).startswith(os.path.abspath(DOCUMENTS_FOLDER)):
+            return jsonify({"error": "Acceso denegado"}), 403
+        
+        # Determinar el tipo MIME basado en la extensión
+        if filename.lower().endswith('.pdf'):
+            mimetype = 'application/pdf'
+        elif filename.lower().endswith('.doc'):
+            mimetype = 'application/msword'
+        elif filename.lower().endswith('.docx'):
+            mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        else:
+            mimetype = 'application/octet-stream'
+        
+        # Servir el archivo
+        return send_file(file_path, mimetype=mimetype, as_attachment=False)
+        
+    except Exception as e:
+        return jsonify({"error": f"Error al servir el archivo: {str(e)}"}), 500
+
+@app.route('/api/documents/list')
+def list_documents():
+    """Endpoint para listar todos los documentos disponibles."""
+    try:
+        documents = []
+        
+        def scan_directory(directory, relative_path=""):
+            for item in os.listdir(directory):
+                item_path = os.path.join(directory, item)
+                relative_item_path = os.path.join(relative_path, item) if relative_path else item
+                
+                if os.path.isdir(item_path):
+                    scan_directory(item_path, relative_item_path)
+                else:
+                    # Solo incluir archivos de documentos
+                    if item.lower().endswith(('.pdf', '.doc', '.docx', '.txt')):
+                        documents.append({
+                            "filename": relative_item_path.replace("\\", "/"),  # Normalizar separadores
+                            "name": item,
+                            "size": os.path.getsize(item_path),
+                            "type": os.path.splitext(item)[1].lower()
+                        })
+        
+        scan_directory(DOCUMENTS_FOLDER)
+        
+        return jsonify({
+            "status": "success",
+            "documents": documents,
+            "total": len(documents)
+        })
+        
+    except Exception as e:
+        return jsonify({"error": f"Error al listar documentos: {str(e)}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

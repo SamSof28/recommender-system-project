@@ -22,7 +22,7 @@ GRADES_DATA = {
 RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
     "Algebra Lineal": [
         {"type": "video", "title": 'Introducción al Algebra Lineal', "link": "https://youtu.be/0Ndnzx6AyaA?si=Qkd4d8JkHb6I8_bg", 'recommended_by': 'Estudiante_A'},
-        {"type": "libro", "title": 'FUNDAMENTOS DE ÁLGEBRA LINEAL', "link": "/documents/Ingeniería de Sistemas/algebra_lineal/Fundamentos_de_álgebra_lineal-Ron_Larson.pdf", 'recommended_by': 'Estudiante_A'},
+        {"type": "libro", "title": 'FUNDAMENTOS DE ÁLGEBRA LINEAL', "link": "http://localhost:5000/api/documents/Ingeniería de Sistemas/algebra_lineal/Fundamentos_de_álgebra_lineal-Ron_Larson.pdf", 'recommended_by': 'Estudiante_A'},
         
     ]
 }

@@ -1,4 +1,7 @@
-'use client';
+"use client";
+
+import { useState } from "react";
+import PDFViewer from "./PDFViewer";
 
 interface Recommendation {
   title: string;
@@ -11,37 +14,43 @@ interface RecommendationResultsProps {
   recommendations: Recommendation[];
 }
 
-export default function RecommendationResults({ recommendations }: RecommendationResultsProps) {
+export default function RecommendationResults({
+  recommendations,
+}: RecommendationResultsProps) {
+  const [selectedPDF, setSelectedPDF] = useState<{
+    url: string;
+    title: string;
+  } | null>(null);
   const getTypeIcon = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'video':
-        return '🎥';
-      case 'libro':
-      case 'book':
-        return '📖';
-      case 'ejercicios':
-      case 'exercise':
-        return '📝';
-      case 'tutorial':
-        return '🎯';
-      case 'artículo':
-      case 'article':
-        return '📄';
+      case "video":
+        return "🎥";
+      case "libro":
+      case "book":
+        return "📖";
+      case "ejercicios":
+      case "exercise":
+        return "📝";
+      case "tutorial":
+        return "🎯";
+      case "artículo":
+      case "article":
+        return "📄";
       default:
-        return '📚';
+        return "📚";
     }
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 8) return 'text-green-600 dark:text-green-400';
-    if (score >= 6) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-orange-600 dark:text-orange-400';
+    if (score >= 8) return "text-green-600 dark:text-green-400";
+    if (score >= 6) return "text-yellow-600 dark:text-yellow-400";
+    return "text-orange-600 dark:text-orange-400";
   };
 
   const getScoreLabel = (score: number) => {
-    if (score >= 8) return 'Excelente';
-    if (score >= 6) return 'Bueno';
-    return 'Regular';
+    if (score >= 8) return "Excelente";
+    if (score >= 6) return "Bueno";
+    return "Regular";
   };
 
   return (
@@ -51,7 +60,8 @@ export default function RecommendationResults({ recommendations }: Recommendatio
           Recomendaciones personalizadas
         </h4>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          {recommendations.length} recursos encontrados, ordenados por relevancia
+          {recommendations.length} recursos encontrados, ordenados por
+          relevancia
         </p>
       </div>
 
@@ -74,7 +84,11 @@ export default function RecommendationResults({ recommendations }: Recommendatio
                 </div>
               </div>
               <div className="text-right">
-                <div className={`text-sm font-semibold ${getScoreColor(rec.score)}`}>
+                <div
+                  className={`text-sm font-semibold ${getScoreColor(
+                    rec.score
+                  )}`}
+                >
                   {rec.score.toFixed(1)}
                 </div>
                 <div className={`text-xs ${getScoreColor(rec.score)}`}>
@@ -90,17 +104,57 @@ export default function RecommendationResults({ recommendations }: Recommendatio
                   style={{ width: `${(rec.score / 10) * 100}%` }}
                 ></div>
               </div>
-              <a
-                href={rec.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium transition-colors"
-              >
-                <span>Acceder</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
+              {rec.type === "libro" || rec.type === "book" ? (
+                <button
+                  onClick={() =>
+                    setSelectedPDF({ url: rec.link, title: rec.title })
+                  }
+                  className="inline-flex items-center space-x-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium transition-colors"
+                >
+                  <span>Ver PDF</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <a
+                  href={rec.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium transition-colors"
+                >
+                  <span>Acceder</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
         ))}
@@ -111,7 +165,9 @@ export default function RecommendationResults({ recommendations }: Recommendatio
         <div className="flex items-start space-x-3">
           <div className="flex-shrink-0">
             <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-              <span className="text-blue-600 dark:text-blue-400 text-sm">ℹ️</span>
+              <span className="text-blue-600 dark:text-blue-400 text-sm">
+                ℹ️
+              </span>
             </div>
           </div>
           <div>
@@ -119,13 +175,23 @@ export default function RecommendationResults({ recommendations }: Recommendatio
               ¿Cómo se calculan las recomendaciones?
             </h5>
             <p className="text-xs text-slate-600 dark:text-slate-400">
-              Nuestro algoritmo utiliza <strong>Álgebra Lineal</strong> para analizar el rendimiento 
-              de estudiantes con perfiles similares al tuyo. Combina la competencia promedio 
-              de los recomendadores con la popularidad de cada recurso para generar un score de relevancia.
+              Nuestro algoritmo utiliza <strong>Álgebra Lineal</strong> para
+              analizar el rendimiento de estudiantes con perfiles similares al
+              tuyo. Combina la competencia promedio de los recomendadores con la
+              popularidad de cada recurso para generar un score de relevancia.
             </p>
           </div>
         </div>
       </div>
+
+      {/* PDF Viewer Modal */}
+      {selectedPDF && (
+        <PDFViewer
+          url={selectedPDF.url}
+          title={selectedPDF.title}
+          onClose={() => setSelectedPDF(null)}
+        />
+      )}
     </div>
   );
 }
