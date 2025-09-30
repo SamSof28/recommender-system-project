@@ -8,7 +8,7 @@ from src.core.algebra import create_student_vectors, calculate_magnitudes
 from data.mock_data import ACADEMIC_DATA, RESOURCES_DATA, GRADES_DATA
 
 app = Flask(__name__) # Instancia de Flask
-CORS(app) # Configuración de CORS para permitir conexiones desde Next.js
+CORS(app, origins=['*']) # Configuración de CORS para permitir conexiones desde cualquier origen
 
 # Configurar la carpeta de documentos como archivos estáticos
 DOCUMENTS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'data', 'documents')

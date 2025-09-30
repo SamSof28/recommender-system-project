@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import RecommendationForm from './components/RecommendationForm';
-import RecommendationResults from './components/RecommendationResults';
-import LoadingSpinner from './components/LoadingSpinner';
+import { useState, useEffect } from "react";
+import RecommendationForm from "./components/RecommendationForm";
+import RecommendationResults from "./components/RecommendationResults";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 interface Recommendation {
   title: string;
@@ -27,27 +27,30 @@ export default function Home() {
     setRecommendations([]);
 
     try {
-      const response = await fetch('http://localhost:5000/api/recommendations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://recommender-api-ffpd.onrender.com/api/recommendations",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Error al obtener recomendaciones');
+        throw new Error("Error al obtener recomendaciones");
       }
 
       const data = await response.json();
-      
-      if (data.status === 'success') {
+
+      if (data.status === "success") {
         setRecommendations(data.recommendations);
       } else {
-        throw new Error(data.error || 'Error desconocido');
+        throw new Error(data.error || "Error desconocido");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido');
+      setError(err instanceof Error ? err.message : "Error desconocido");
     } finally {
       setLoading(false);
     }
@@ -81,8 +84,9 @@ export default function Home() {
             Encuentra los mejores recursos de estudio
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            Nuestro sistema utiliza algoritmos de Álgebra Lineal y Optimización para recomendarte 
-            recursos académicos personalizados basados en tu perfil de estudiante.
+            Nuestro sistema utiliza algoritmos de Álgebra Lineal y Optimización
+            para recomendarte recursos académicos personalizados basados en tu
+            perfil de estudiante.
           </p>
         </div>
 
@@ -100,26 +104,29 @@ export default function Home() {
             <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mb-6">
               Tus recomendaciones
             </h3>
-            
+
             {loading && <LoadingSpinner />}
-            
+
             {error && (
               <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <p className="text-red-800 dark:text-red-200 text-sm">{error}</p>
+                <p className="text-red-800 dark:text-red-200 text-sm">
+                  {error}
+                </p>
               </div>
             )}
-            
+
             {recommendations.length > 0 && (
               <RecommendationResults recommendations={recommendations} />
             )}
-            
+
             {!loading && !error && recommendations.length === 0 && (
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">📚</span>
                 </div>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Completa el formulario para obtener recomendaciones personalizadas
+                  Completa el formulario para obtener recomendaciones
+                  personalizadas
                 </p>
               </div>
             )}
@@ -131,7 +138,10 @@ export default function Home() {
       <footer className="border-t border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-slate-600 dark:text-slate-400">
-            <p>Sistema de Recomendación Académico • Desarrollado con Next.js y Álgebra Lineal</p>
+            <p>
+              Sistema de Recomendación Académico • Desarrollado con Next.js y
+              Álgebra Lineal
+            </p>
           </div>
         </div>
       </footer>

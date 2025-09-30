@@ -40,7 +40,7 @@ def add_document(file_path, career, subject, doc_type="libro", recommended_by="S
     
     # Generar enlace para el sistema
     relative_path = f"{career}/{subject.lower().replace(' ', '_')}/{file_name}"
-    link = f"http://localhost:5000/api/documents/{relative_path}"
+    link = f"https://recommender-api-ffpd.onrender.com/api/documents/{relative_path}"
     
     print(f"🔗 Enlace generado: {link}")
     

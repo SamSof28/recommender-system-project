@@ -29,7 +29,9 @@ export default function RecommendationForm({
   useEffect(() => {
     const fetchCareers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/careers");
+        const response = await fetch(
+          "https://recommender-api-ffpd.onrender.com/api/careers"
+        );
         const data = await response.json();
         if (data.status === "success") {
           setCareers(data.careers);
@@ -47,7 +49,7 @@ export default function RecommendationForm({
       const fetchSemesters = async () => {
         try {
           const response = await fetch(
-            `http://localhost:5000/api/semesters/${encodeURIComponent(
+            `https://recommender-api-ffpd.onrender.com/api/semesters/${encodeURIComponent(
               formData.career
             )}`
           );
@@ -72,7 +74,7 @@ export default function RecommendationForm({
       const fetchCourses = async () => {
         try {
           const response = await fetch(
-            `http://localhost:5000/api/courses/${encodeURIComponent(
+            `https://recommender-api-ffpd.onrender.com/api/courses/${encodeURIComponent(
               formData.career
             )}/${formData.semester}`
           );

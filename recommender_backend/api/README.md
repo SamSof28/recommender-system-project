@@ -111,7 +111,7 @@ python api/app.py
 3. **Acceder a la API:**
 
 ```
-http://localhost:5000
+https://recommender-api-ffpd.onrender.com
 ```
 
 ### Opción 2: Docker

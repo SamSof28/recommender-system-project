@@ -51,7 +51,7 @@ RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
         {
             "type": "libro",
             "title": "Nombre del Documento",
-            "link": "http://localhost:5000/api/documents/Ingeniería de Sistemas/tu_materia/tu_archivo.pdf",
+            "link": "https://recommender-api-ffpd.onrender.com/api/documents/Ingeniería de Sistemas/tu_materia/tu_archivo.pdf",
             'recommended_by': 'Quien lo recomienda'
         },
     ]
@@ -64,7 +64,7 @@ RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
 
 1. **Servir documentos**: `GET /api/documents/<ruta_del_archivo>`
 
-   - Ejemplo: `http://localhost:5000/api/documents/Ingeniería de Sistemas/algebra_lineal/libro.pdf`
+   - Ejemplo: `https://recommender-api-ffpd.onrender.com/api/documents/Ingeniería de Sistemas/algebra_lineal/libro.pdf`
 
 2. **Listar documentos**: `GET /api/documents/list`
    - Devuelve todos los documentos disponibles con metadatos

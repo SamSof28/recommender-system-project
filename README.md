@@ -149,16 +149,16 @@ El sistema expone los siguientes endpoints:
 
 ```bash
 # Obtener carreras disponibles
-curl -X GET http://localhost:5000/api/careers
+curl -X GET https://recommender-api-ffpd.onrender.com/api/careers
 
 # Obtener semestres de una carrera
-curl -X GET http://localhost:5000/api/semesters/Ingeniería%20de%20Sistemas
+curl -X GET https://recommender-api-ffpd.onrender.com/api/semesters/Ingeniería%20de%20Sistemas
 
 # Obtener cursos de una carrera y semestre
-curl -X GET http://localhost:5000/api/courses/Ingeniería%20de%20Sistemas/2
+curl -X GET https://recommender-api-ffpd.onrender.com/api/courses/Ingeniería%20de%20Sistemas/2
 
 # Obtener recomendaciones
-curl -X POST http://localhost:5000/api/recommendations \
+curl -X POST https://recommender-api-ffpd.onrender.com/api/recommendations \
   -H "Content-Type: application/json" \
   -d '{
     "career": "Ingeniería de Sistemas",
