@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import RecommendationForm from "./components/RecommendationForm";
 import RecommendationResults from "./components/RecommendationResults";
 import LoadingSpinner from "./components/LoadingSpinner";
+import { API_ENDPOINTS } from "./config/api";
 
 interface Recommendation {
   title: string;
@@ -27,16 +28,13 @@ export default function Home() {
     setRecommendations([]);
 
     try {
-      const response = await fetch(
-        "https://recommender-api-ffpd.onrender.com/api/recommendations",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(API_ENDPOINTS.RECOMMENDATIONS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error("Error al obtener recomendaciones");

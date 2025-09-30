@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { API_ENDPOINTS } from "../config/api";
 
 interface FormData {
   career: string;
@@ -29,9 +30,7 @@ export default function RecommendationForm({
   useEffect(() => {
     const fetchCareers = async () => {
       try {
-        const response = await fetch(
-          "https://recommender-api-ffpd.onrender.com/api/careers"
-        );
+        const response = await fetch(API_ENDPOINTS.CAREERS);
         const data = await response.json();
         if (data.status === "success") {
           setCareers(data.careers);
@@ -49,9 +48,7 @@ export default function RecommendationForm({
       const fetchSemesters = async () => {
         try {
           const response = await fetch(
-            `https://recommender-api-ffpd.onrender.com/api/semesters/${encodeURIComponent(
-              formData.career
-            )}`
+            API_ENDPOINTS.SEMESTERS(formData.career)
           );
           const data = await response.json();
           if (data.status === "success") {
@@ -74,9 +71,7 @@ export default function RecommendationForm({
       const fetchCourses = async () => {
         try {
           const response = await fetch(
-            `https://recommender-api-ffpd.onrender.com/api/courses/${encodeURIComponent(
-              formData.career
-            )}/${formData.semester}`
+            API_ENDPOINTS.COURSES(formData.career, formData.semester)
           );
           const data = await response.json();
           if (data.status === "success") {
