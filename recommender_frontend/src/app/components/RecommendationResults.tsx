@@ -36,6 +36,18 @@ export default function RecommendationResults({
       case "artículo":
       case "article":
         return "📄";
+      case "repositorio":
+      case "github":
+        return "💻";
+      case "presentacion":
+      case "slides":
+        return "📊";
+      case "ejercicios_practicos":
+      case "practice":
+        return "🔧";
+      case "examen":
+      case "quiz":
+        return "📋";
       default:
         return "📚";
     }
@@ -51,6 +63,69 @@ export default function RecommendationResults({
     if (score >= 8) return "Excelente";
     if (score >= 6) return "Bueno";
     return "Regular";
+  };
+
+  const getTypeColor = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "video":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "libro":
+      case "book":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "repositorio":
+      case "github":
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
+      case "ejercicios":
+      case "exercise":
+      case "ejercicios_practicos":
+      case "practice":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "tutorial":
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+      case "artículo":
+      case "article":
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+      case "presentacion":
+      case "slides":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "examen":
+      case "quiz":
+        return "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200";
+      default:
+        return "bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200";
+    }
+  };
+
+  const getTypeLabel = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "video":
+        return "Video";
+      case "libro":
+      case "book":
+        return "Libro PDF";
+      case "repositorio":
+      case "github":
+        return "Repositorio";
+      case "ejercicios":
+      case "exercise":
+        return "Ejercicios";
+      case "ejercicios_practicos":
+      case "practice":
+        return "Práctica";
+      case "tutorial":
+        return "Tutorial";
+      case "artículo":
+      case "article":
+        return "Artículo";
+      case "presentacion":
+      case "slides":
+        return "Presentación";
+      case "examen":
+      case "quiz":
+        return "Examen";
+      default:
+        return type.charAt(0).toUpperCase() + type.slice(1);
+    }
   };
 
   return (
@@ -78,9 +153,13 @@ export default function RecommendationResults({
                   <h5 className="font-medium text-slate-900 dark:text-white text-sm">
                     {rec.title}
                   </h5>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 capitalize">
-                    {rec.type}
-                  </p>
+                  <span
+                    className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(
+                      rec.type
+                    )}`}
+                  >
+                    {getTypeLabel(rec.type)}
+                  </span>
                 </div>
               </div>
               <div className="text-right">
@@ -139,7 +218,13 @@ export default function RecommendationResults({
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium transition-colors"
                 >
-                  <span>Acceder</span>
+                  <span>
+                    {rec.type === "repositorio" || rec.type === "github"
+                      ? "Ver Repositorio"
+                      : rec.type === "video"
+                      ? "Ver Video"
+                      : "Acceder"}
+                  </span>
                   <svg
                     className="w-4 h-4"
                     fill="none"
