@@ -55,7 +55,7 @@ RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
         {"type": "video", "title": 'La Esencia del Álgebra Lineal (3Blue1Brown)', "link": "https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab", 'recommended_by': 'Estudiante_Med_02'},
 
         # Recurso MEDIO: Popular entre estudiantes de rendimiento medio.
-        {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU", 'recommended_by': 'Estudiante_Med_01'},
+        {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU", 'recommended_by': 'Estudiante_Top_03'},
         {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU", 'recommended_by': 'Estudiante_Med_03'},
         {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU", 'recommended_by': 'Estudiante_Med_05'},
 
