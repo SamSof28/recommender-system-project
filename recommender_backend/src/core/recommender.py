@@ -1,18 +1,18 @@
-# src/core/recommender.py
 import numpy as np
+
+# Importamos GRADES_DATA aquí para poder verificar el rol del recomendador
+from data.mock_data import GRADES_DATA
 
 def recommend_resources(target_course: str, all_resources: dict, student_competence: dict) -> list:
     """
-    Recomienda recursos usando normalización para balancear la competencia
-    de los recomendadores y la popularidad del recurso.
+    Recomienda recursos usando normalización y dando un trato especial a las
+    recomendaciones de profesores.
     """
     course_resources = all_resources.get(target_course, [])
     if not course_resources:
         return []
 
-    # --- PASO 1: Pre-cálculo de valores brutos de competencia y popularidad ---
-    
-    # Agrupar recomendadores y calcular métricas brutas para cada recurso
+    # --- PASO 1: Pre-cálculo de valores brutos ---
     resources_metrics = {}
     for resource in course_resources:
         title = resource['title']
@@ -23,22 +23,31 @@ def recommend_resources(target_course: str, all_resources: dict, student_compete
     if not resources_metrics:
         return []
 
-    # Calcular la competencia promedio y la popularidad para cada título
     raw_metrics = {}
+    
+    # El valor más alto posible de competencia para un estudiante (ej. 3 materias con 5.0)
+    # sqrt(5^2 + 5^2 + 5^2) = 8.66. Usamos un valor superior para los profesores.
+    PROFESSOR_COMPETENCE_SCORE = 10.0
+
     for title, info in resources_metrics.items():
         recommenders = info['recommenders']
         
-        # Competencia promedio de los recomendadores para este recurso
-        avg_competence = sum(student_competence.get(rec_id, 0) for rec_id in recommenders) / len(recommenders) if recommenders else 0
+        # --- LÓGICA MEJORADA PARA COMPETENCIA ---
+        total_competence = 0
+        for rec_id in recommenders:
+            # Verificamos si el recomendador es un profesor
+            recommender_info = GRADES_DATA.get(rec_id, {})
+            if recommender_info.get('role') == 'professor':
+                total_competence += PROFESSOR_COMPETENCE_SCORE
+            else:
+                total_competence += student_competence.get(rec_id, 0)
         
-        # Popularidad (número de estudiantes únicos que lo recomiendan)
+        avg_competence = total_competence / len(recommenders) if recommenders else 0
         popularity = len(set(recommenders))
         
         raw_metrics[title] = {'competence': avg_competence, 'popularity': popularity}
 
-    # --- PASO 2: Normalización de las métricas a una escala de 0 a 1 ---
-    
-    # Extraer todos los valores de competencia y popularidad para encontrar los rangos
+    # --- PASO 2: Normalización (sin cambios) ---
     competence_values = [data['competence'] for data in raw_metrics.values()]
     popularity_values = [data['popularity'] for data in raw_metrics.values()]
     
@@ -47,31 +56,21 @@ def recommend_resources(target_course: str, all_resources: dict, student_compete
     min_pop = min(popularity_values)
     max_pop = max(popularity_values)
 
-    # --- PASO 3: Cálculo del score final con valores normalizados ---
-    
+    # --- PASO 3: Cálculo del score final (sin cambios) ---
     recommendation_scores = {}
-    
-    # Pesos de Optimización (se mantienen igual, pero ahora actúan sobre valores escalados)
     w1_competence = 0.8
     w2_popularity = 0.2
 
     for title, metrics in raw_metrics.items():
-        # Normalizar competencia
-        # Se maneja el caso donde todos los valores son iguales para evitar división por cero
         norm_competence = 0.0
         if (max_comp - min_comp) > 0:
             norm_competence = (metrics['competence'] - min_comp) / (max_comp - min_comp)
 
-        # Normalizar popularidad
         norm_popularity = 0.0
         if (max_pop - min_pop) > 0:
             norm_popularity = (metrics['popularity'] - min_pop) / (max_pop - min_pop)
         
-        # Función Objetivo con valores normalizados
         normalized_score = (w1_competence * norm_competence) + (w2_popularity * norm_popularity)
-        
-        # Escalar el resultado final a un rango más amigable (ej. de 1 a 10)
-        # Esto le da al usuario una puntuación final mucho más intuitiva.
         final_score = 1 + (normalized_score * 9)
         
         resource_data = resources_metrics[title]['data']
@@ -81,5 +80,4 @@ def recommend_resources(target_course: str, all_resources: dict, student_compete
             'link': resource_data['link']
         }
 
-    # Ordenar y devolver las recomendaciones
     return sorted(recommendation_scores.items(), key=lambda item: item[1]['score'], reverse=True)
