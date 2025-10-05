@@ -64,6 +64,7 @@ RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
     "Matematicas Discretas": [
         {"type": "repositorio", "title": 'Matemáticas Discretas - Recursos Completos', "link": "https://github.com/OrregoGildardo/MatematicasDiscretas/", 'recommended_by': 'Gildardo Orrego'},
         {"type": "repositorio", "title": 'Matemáticas Discretas - Recursos Completos', "link": "https://github.com/OrregoGildardo/MatematicasDiscretas/", 'recommended_by': 'Estudiante_Top_01'},
+        {"type": "repositorio", "title": 'Matemáticas Discretas - Recursos Completos', "link": "https://github.com/OrregoGildardo/MatematicasDiscretas/", 'recommended_by': 'Estudiante_Top_02'}
     ]
 }
 
