@@ -34,6 +34,7 @@ GRADES_DATA = {
     'Estudiante_IS_19': {'carrera': 'Ingenieria de Sistemas', 'semestre': 2, 'grades': {'Algebra Lineal': 4.3, 'Calculo Diferencial': 4.4, 'Matematicas Discretas': 4.3}},
     'Estudiante_IS_20': {'carrera': 'Ingenieria de Sistemas', 'semestre': 2, 'grades': {'Algebra Lineal': 4.7, 'Calculo Diferencial': 4.6, 'Matematicas Discretas': 4.7}},
     'Gildardo Orrego': {'carrera': 'Ingenieria de Sistemas', 'semestre': 2, 'grades': {'Matematicas Discretas': 5}},
+    'Jose Jesus Torres': {'carrera': 'Ingenieria de Sistemas', 'semestre': 2, 'grades': {'Algebra Lineal': 5}},
 }
 
 #Recursos de estudio con su tipo y enlace
@@ -41,7 +42,7 @@ RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
     "Algebra Lineal": [
         {"type": "video", "title": 'Introducción al Algebra Lineal', "link": "https://youtu.be/0Ndnzx6AyaA", 'recommended_by': 'Estudiante_IS_01'},
         {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU", 'recommended_by': 'Estudiante_IS_03'},
-        {"type": "libro", "title": 'FUNDAMENTOS DE ÁLGEBRA LINEAL (Ron Larson)', "link": "https://recommender-api-ffpd.onrender.com/api/documents/Ingeniería de Sistemas/algebra_lineal/Fundamentos_de_álgebra_lineal-Ron_Larson.pdf", 'recommended_by': 'Estudiante_IS_05'},
+        {"type": "libro", "title": 'FUNDAMENTOS DE ÁLGEBRA LINEAL (Ron Larson)', "link": "https://recommender-api-ffpd.onrender.com/api/documents/Ingeniería de Sistemas/algebra_lineal/Fundamentos_de_álgebra_lineal-Ron_Larson.pdf", 'recommended_by': 'Jose Jesus Torres'},
         {"type": "video", "title": 'Espacios Vectoriales Explicados', "link": "https://www.youtube.com/watch?v=some_vector_space_id", 'recommended_by': 'Estudiante_IS_01'},
         {"type": "tutorial", "title": 'Ejercicios Resueltos de Algebra Lineal', "link": "https://example.com/ejercicios_algebra.pdf", 'recommended_by': 'Estudiante_IS_09'},
         {"type": "libro", "title": 'Álgebra Lineal - Stanley I. Grossman', "link": "https://example.com/grossman_algebra.pdf", 'recommended_by': 'Estudiante_IS_12'},
