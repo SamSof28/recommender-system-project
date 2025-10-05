@@ -56,19 +56,29 @@ def recommend_resources(target_course: str, all_resources: dict, student_compete
     min_pop = min(popularity_values)
     max_pop = max(popularity_values)
 
-    # --- PASO 3: Cálculo del score final (sin cambios) ---
+    # --- PASO 3: Cálculo del score final (mejorado) ---
     recommendation_scores = {}
     w1_competence = 0.8
     w2_popularity = 0.2
 
     for title, metrics in raw_metrics.items():
+        # Normalización mejorada para evitar división por cero
         norm_competence = 0.0
         if (max_comp - min_comp) > 0:
             norm_competence = (metrics['competence'] - min_comp) / (max_comp - min_comp)
+        else:
+            # Si solo hay un recurso, usar un valor base basado en la competencia absoluta
+            # Escalar la competencia a un rango de 0-1 usando un valor de referencia
+            reference_competence = 10.0  # Valor de referencia para profesores
+            norm_competence = min(metrics['competence'] / reference_competence, 1.0)
 
         norm_popularity = 0.0
         if (max_pop - min_pop) > 0:
             norm_popularity = (metrics['popularity'] - min_pop) / (max_pop - min_pop)
+        else:
+            # Si solo hay un recurso, usar la popularidad absoluta normalizada
+            # Un recurso recomendado por 3 personas = 0.6, por 1 persona = 0.2
+            norm_popularity = min(metrics['popularity'] / 5.0, 1.0)
         
         normalized_score = (w1_competence * norm_competence) + (w2_popularity * norm_popularity)
         final_score = 1 + (normalized_score * 9)
