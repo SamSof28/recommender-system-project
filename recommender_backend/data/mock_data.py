@@ -39,9 +39,16 @@ GRADES_DATA = {
 #Recursos de estudio con su tipo y enlace
 RESOURCES_DATA: dict[str, list[dict[str, str]]] = {
     "Algebra Lineal": [
-        {"type": "video", "title": 'Introducción al Algebra Lineal', "link": "https://youtu.be/0Ndnzx6AyaA?si=Qkd4d8JkHb6I8_bg", 'recommended_by': 'Estudiante_A'},
-        {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU&list=PLeySRPnY35dEr2XewNdOjOl7Ft0tLIlKI", 'recommended_by': 'Estudiante_C'},
-        {"type": "libro", "title": 'FUNDAMENTOS DE ÁLGEBRA LINEAL', "link": "https://recommender-api-ffpd.onrender.com/api/documents/Ingeniería de Sistemas/algebra_lineal/Fundamentos_de_álgebra_lineal-Ron_Larson.pdf", 'recommended_by': 'Estudiante_A'},
+        {"type": "video", "title": 'Introducción al Algebra Lineal', "link": "https://youtu.be/0Ndnzx6AyaA", 'recommended_by': 'Estudiante_IS_01'},
+        {"type": "video", "title": 'Curso de Matrices y Determinantes', "link": "https://www.youtube.com/watch?v=RJ96S2Pt3qU", 'recommended_by': 'Estudiante_IS_03'},
+        {"type": "libro", "title": 'FUNDAMENTOS DE ÁLGEBRA LINEAL (Ron Larson)', "link": "https://recommender-api-ffpd.onrender.com/api/documents/Ingeniería de Sistemas/algebra_lineal/Fundamentos_de_álgebra_lineal-Ron_Larson.pdf", 'recommended_by': 'Estudiante_IS_05'},
+        {"type": "video", "title": 'Espacios Vectoriales Explicados', "link": "https://www.youtube.com/watch?v=some_vector_space_id", 'recommended_by': 'Estudiante_IS_01'},
+        {"type": "tutorial", "title": 'Ejercicios Resueltos de Algebra Lineal', "link": "https://example.com/ejercicios_algebra.pdf", 'recommended_by': 'Estudiante_IS_09'},
+        {"type": "libro", "title": 'Álgebra Lineal - Stanley I. Grossman', "link": "https://example.com/grossman_algebra.pdf", 'recommended_by': 'Estudiante_IS_12'},
+        {"type": "video", "title": 'Transformaciones Lineales', "link": "https://www.youtube.com/watch?v=some_linear_transform_id", 'recommended_by': 'Estudiante_IS_05'},
+        {"type": "podcast", "title": 'Conceptos Básicos de Matrices', "link": "https://example.com/podcast_matrices.mp3", 'recommended_by': 'Estudiante_IS_03'},
+        {"type": "video", "title": 'Diagonalización de Matrices', "link": "https://www.youtube.com/watch?v=some_diagonal_id", 'recommended_by': 'Estudiante_IS_01'},
+        {"type": "tutorial", "title": 'Guía de Autovalores y Autovectores', "link": "https://example.com/autovalores.pdf", 'recommended_by': 'Estudiante_IS_09'},
     ],
     "Matematicas Discretas": [
         {"type": "repositorio", "title": 'Matemáticas Discretas - Recursos Completos', "link": "https://github.com/OrregoGildardo/MatematicasDiscretas/", 'recommended_by': 'Gildardo Orrego'},
